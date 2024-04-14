@@ -42,17 +42,43 @@ namespace Prog1.st10254714
 
             }
         }
+        
         private static void recipeDetails()
         {
             Console.WriteLine("Please enter in your details for your recipe");
             Console.WriteLine("**************************************************");
-            Console.WriteLine("number of ingredients:");
-            string ingred = Console.ReadLine();
-            if (ingred == "")
-            { Console.WriteLine("please enter in the number of ingredients"); }
-            else
-            Console.WriteLine("Number of ingredients:"+ ingred);
+            Console.WriteLine("add an ingredient? Y or N");
+            string opt = Console.ReadLine();
+            
+            if (opt.ToLower() == "y")
+            {
+                Console.WriteLine("enter name of ingredient:");
+                string name = Console.ReadLine();
+                Console.WriteLine("enter quantity of the ingredient:");
+                string quantity = Console.ReadLine();
+                Console.WriteLine("enter the unit of measurement of the ingredient:");
+                string unitOfMes = Console.ReadLine();
+            }
+            else if (opt.ToLower() == "n")
+            { }
+            //**********************************************************************************************************************************
+            Console.WriteLine("add a step? Y or N");
+            string choice = Console.ReadLine();
+
+            if (opt.ToLower() == "y")
+            {
+                Console.WriteLine("enter name of ingredient:");
+                string name = Console.ReadLine();
+                Console.WriteLine("enter quantity of the ingredient:");
+                string quantity = Console.ReadLine();
+                Console.WriteLine("enter the unit of measurement of the ingredient:");
+                string unitOfMes = Console.ReadLine();
+            }
+            else if (opt.ToLower() == "n")
+            { }
 
         }
+        
+        }
     }
-}
+
