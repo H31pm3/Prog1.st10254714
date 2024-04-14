@@ -4,14 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Prog1.st10254714
 {
-    internal class Program
+    class steps
     {
-        static void Main(string[] args)
-        {
-            recipe.intro();
-        }
     }
 }
