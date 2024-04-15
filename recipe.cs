@@ -24,8 +24,9 @@ namespace Prog1.st10254714
                 string userInput = Console.ReadLine();
                 if (userInput.ToLower() == "y")
                 {
-                    recipeDetails();
-                    recipe.Add();
+                    recipe newRecipe = new recipe();
+                    recipeDetails(newRecipe);
+                    recipes.Add(newRecipe);
                 }
                 else if( userInput.ToLower() == "n")
                 {
@@ -54,7 +55,7 @@ namespace Prog1.st10254714
         {
             steps.Add($"{nam}: {description}");
         }
-        private static void recipeDetails()
+        private static void recipeDetails(recipe newRecipe)
         {
             Console.WriteLine("Please enter in your details for your recipe");
             Console.WriteLine("**************************************************");
@@ -70,7 +71,7 @@ namespace Prog1.st10254714
                 Console.WriteLine("enter the unit of measurement of the ingredient:");
                 string unitOfMes = Console.ReadLine();
 
-                
+                newRecipe.newIngredients(name, quantity, unitOfMes);
                 Console.WriteLine("Do you want to enter in another ingredient? enter Y or N ");
                 string slct = Console.ReadLine();
                 if (slct.ToLower() == "y")
@@ -86,20 +87,30 @@ namespace Prog1.st10254714
             }
 
  
-
             //**********************************************************************************************************************************
+            
             Console.WriteLine("add a step? Y or N");
             string choice = Console.ReadLine();
 
-            if (choice.ToLower() == "y")
+            while (choice.ToLower() == "y")
             {
                 Console.WriteLine("enter name of step:");
                 string nam = Console.ReadLine();
                 Console.WriteLine("enter step description:");
                 string description = Console.ReadLine();
+
+                newRecipe.addStep(nam, description);
+                Console.WriteLine("Do you want to enter in another step? enter Y or N ");
+                string chois = Console.ReadLine();
+                if (chois.ToLower() == "y")
+                {
+                    choice = "y";
+                }
+                else if (chois.ToLower() == "n")
+                {
+                    choice = "n";
+                }
             }
-            else if (choice.ToLower() == "n")
-            { }
 
         }
         public static void displayListOfRecipes()
@@ -112,14 +123,17 @@ namespace Prog1.st10254714
                 Console.WriteLine("ingredients:");
                 foreach (var ingredient in recipe.ingredient)
                 {
-                    Console.WriteLine("");
+                    Console.WriteLine(ingredient);
                 }
                 Console.WriteLine("Steps:");
                 foreach (var step in recipe.steps)
                 {
-                    Console.WriteLine("");
+                    Console.WriteLine(step);
                 }
             }
+            Console.WriteLine("*******************************************************************");
+            Console.WriteLine("");
+            Console.WriteLine("");
         }
         }
     }
