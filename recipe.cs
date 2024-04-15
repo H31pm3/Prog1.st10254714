@@ -8,6 +8,8 @@ namespace Prog1.st10254714
 {
     public class recipe
     {
+        public List<string> ingredient { get; set; } = new List<string>();
+        public List<string> steps { get; set; } = new List<string>();
         public static void intro()
         {
             bool continueProgram = true;
@@ -50,7 +52,7 @@ namespace Prog1.st10254714
             Console.WriteLine("add an ingredient? Y or N");
             string opt = Console.ReadLine();
             
-            if (opt.ToLower() == "y")
+            while (opt.ToLower() == "y")
             {
                 Console.WriteLine("enter name of ingredient:");
                 string name = Console.ReadLine();
@@ -58,23 +60,24 @@ namespace Prog1.st10254714
                 string quantity = Console.ReadLine();
                 Console.WriteLine("enter the unit of measurement of the ingredient:");
                 string unitOfMes = Console.ReadLine();
+
+                Console.WriteLine("Do you want to enter in another ingredient? enter Y or N ");
+                opt = Console.ReadLine();
             }
-            else if (opt.ToLower() == "n")
-            { }
+ 
+
             //**********************************************************************************************************************************
             Console.WriteLine("add a step? Y or N");
             string choice = Console.ReadLine();
 
-            if (opt.ToLower() == "y")
+            if (choice.ToLower() == "y")
             {
-                Console.WriteLine("enter name of ingredient:");
-                string name = Console.ReadLine();
-                Console.WriteLine("enter quantity of the ingredient:");
-                string quantity = Console.ReadLine();
-                Console.WriteLine("enter the unit of measurement of the ingredient:");
-                string unitOfMes = Console.ReadLine();
+                Console.WriteLine("enter name of step:");
+                string nam = Console.ReadLine();
+                Console.WriteLine("enter step description:");
+                string description = Console.ReadLine();
             }
-            else if (opt.ToLower() == "n")
+            else if (choice.ToLower() == "n")
             { }
 
         }
