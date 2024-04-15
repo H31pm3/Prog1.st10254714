@@ -20,8 +20,10 @@ namespace Prog1.st10254714
                 Console.WriteLine("Welcome");
                 Console.WriteLine("**************************************************");
                 Console.WriteLine("");
+               
                 Console.WriteLine("Would you like to record a new recipe? answer Y or N:");
                 string userInput = Console.ReadLine();
+                
                 if (userInput.ToLower() == "y")
                 {
                     recipe newRecipe = new recipe();
