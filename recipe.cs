@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +45,8 @@ namespace Prog1.st10254714
                         
                         break;
                     case 3:
-                        
+                        //recipeScale(quantity);
+
                         break;
                     case 4:
                         Console.WriteLine("Exiting program");
@@ -58,6 +60,7 @@ namespace Prog1.st10254714
             }
 
         }
+        
 
         public void newIngredients(string name, string quantity, string unitOfMeasure)
         {
@@ -82,6 +85,8 @@ namespace Prog1.st10254714
                 string quantity = Console.ReadLine();
                 Console.WriteLine("enter the unit of measurement of the ingredient:");
                 string unitOfMes = Console.ReadLine();
+                //recipeScale(quantity);
+                 
 
                 newRecipe.newIngredients(name, quantity, unitOfMes);
                 Console.WriteLine("Do you want to enter in another ingredient? enter Y or N ");
@@ -125,6 +130,8 @@ namespace Prog1.st10254714
             }
 
         }
+        
+
         public static void displayListOfRecipes()
         {
             Console.WriteLine("All recipes:");
@@ -136,6 +143,7 @@ namespace Prog1.st10254714
                 foreach (var ingredient in recipe.ingredient)
                 {
                     Console.WriteLine(ingredient);
+
                 }
                 Console.WriteLine("Steps:");
                 foreach (var step in recipe.steps)

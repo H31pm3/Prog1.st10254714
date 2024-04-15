@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Prog1.st10254714
 {
-    class steps
+    class stuff : recipe
     {
+        
+
     }
 }
