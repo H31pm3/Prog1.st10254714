@@ -20,36 +20,46 @@ namespace Prog1.st10254714
                 Console.WriteLine("Welcome");
                 Console.WriteLine("**************************************************");
                 Console.WriteLine("");
-               
-                Console.WriteLine("Would you like to record a new recipe? answer Y or N:");
-                string userInput = Console.ReadLine();
-                
-                if (userInput.ToLower() == "y")
+
+                Console.WriteLine("enter in 1 to create a new recipe");
+                Console.WriteLine("enter in 2 to display created recipes");
+                Console.WriteLine("enter in 3 to scale recipe");
+                Console.WriteLine("enter in 4 to exit program");
+                int userInput;
+                bool selectNumber;
+                selectNumber = int.TryParse(Console.ReadLine(), out userInput);
+                //string userInput = Console.ReadLine();
+                switch (userInput)
                 {
-                    recipe newRecipe = new recipe();
-                    recipeDetails(newRecipe);
-                    recipes.Add(newRecipe);
-                }
-                else if( userInput.ToLower() == "n")
-                {
-                    Console.WriteLine("ok, no worries. would you like to exit the application or display stored recipes? enter y to exit or n to display recipes.");
-                    string chc = Console.ReadLine();
-                    if (chc.ToLower() == "y")
-                    {
+                    case 1:
+                        recipe newRecipe = new recipe();
+                        recipeDetails(newRecipe);
+                        recipes.Add(newRecipe);
+                        break;
+
+                    case 2:
+                        Console.WriteLine("displaying recipes");
+                        displayListOfRecipes();
+                  
+                        
+                        break;
+                    case 3:
+                        
+                        break;
+                    case 4:
                         Console.WriteLine("Exiting program");
                         Environment.Exit(0);
-                    }
-                    else if (chc.ToLower() == "n")
-                    { displayListOfRecipes(); }
+                        break;
 
-                } else
-                {
-                    Console.WriteLine("Invalid choice.Please enter in either Y or N");
+
                 }
 
+
             }
+
         }
-        public void newIngredients( string name, string quantity, string unitOfMeasure)
+
+        public void newIngredients(string name, string quantity, string unitOfMeasure)
         {
             ingredient.Add($"{name},{quantity}, {unitOfMeasure}");
         }
@@ -63,7 +73,7 @@ namespace Prog1.st10254714
             Console.WriteLine("**************************************************");
             Console.WriteLine("add an ingredient? Y or N");
             string opt = Console.ReadLine();
-            
+
             while (opt.ToLower() == "y")
             {
                 Console.WriteLine("enter name of ingredient:");
@@ -79,18 +89,18 @@ namespace Prog1.st10254714
                 if (slct.ToLower() == "y")
                 {
                     opt = "y";
-                } 
+                }
                 else if (slct.ToLower() == "n")
                 {
                     opt = "n";
                 }
-             
-                   
+
+
             }
 
- 
+
             //**********************************************************************************************************************************
-            
+
             Console.WriteLine("add a step? Y or N");
             string choice = Console.ReadLine();
 
@@ -137,6 +147,6 @@ namespace Prog1.st10254714
             Console.WriteLine("");
             Console.WriteLine("");
         }
-        }
     }
+}
 
