@@ -11,12 +11,17 @@ namespace Prog1.st10254714
     {
         static List<recipe> recipes = new List<recipe>();
         public List<string> ingredient { get; set; } = new List<string>();
+        public List<string> originalIgredients { get; set; } = new List<string>();
         public List<string> steps { get; set; } = new List<string>();
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+        
         public static void intro()
         {
             bool continueProgram = true;
-            string quantity = null;
+            //string quantity = null;
             recipe currentRecipe = null;
+
+            
 
             while (continueProgram)
             {
@@ -27,7 +32,8 @@ namespace Prog1.st10254714
                 Console.WriteLine("enter in 1 to create a new recipe");
                 Console.WriteLine("enter in 2 to display created recipes");
                 Console.WriteLine("enter in 3 to scale recipe");
-                Console.WriteLine("enter in 4 to exit program");
+                Console.WriteLine("enter in 4 to clear recipes");
+                Console.WriteLine("enter in 5 to exit program");
                 int userInput;
                 bool selectNumber;
                 selectNumber = int.TryParse(Console.ReadLine(), out userInput);
@@ -56,32 +62,49 @@ namespace Prog1.st10254714
                             Console.WriteLine("No recipe has been created yet.");
                         }
 
-
                         break;
                     case 4:
+                        if (currentRecipe != null)
+                        {
+                            currentRecipe.clearRecipes();
+                            Console.WriteLine("recipe cleared succesfully!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No recipe exists to be cleared");
+                        }
+                        break;
+                    case 5:
                         Console.WriteLine("Exiting program");
                         Environment.Exit(0);
+
                         break;
-
-
                 }
 
 
             }
 
         }
-        
+        public void clearRecipes()
+        {
+            ingredient.Clear();
+            steps.Clear();
 
+        }
+
+
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public void newIngredients(string name, string quantity, string unitOfMeasure)
         {
             ingredient.Add($"{name},{quantity}, {unitOfMeasure}");
         }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public void addStep(string nam, string description)
         {
             steps.Add($"{nam}: {description}");
         }
 
-        
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public static void recipeDetails(recipe newRecipe)
         {
             Console.WriteLine("create new recipe (1) or scale existing recipe (2)");
@@ -102,7 +125,7 @@ namespace Prog1.st10254714
                         quantity = Console.ReadLine();
                         Console.WriteLine("enter the unit of measurement of the ingredient:");
                         unitOfMes = Console.ReadLine();
-               
+                        newRecipe.originalIgredients.Add($"{name},{quantity}, {unitOfMes}");
                 
 
 
@@ -152,13 +175,15 @@ namespace Prog1.st10254714
 
 
         }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public static void recipeScale(recipe recipeToScale)
         {
 
-            Console.WriteLine("What would you like to scale the recipe to? (half, double, triple)");
+            Console.WriteLine("What would you like to scale the recipe to? (half, double, triple)? or type revert to revert any scaling.");
             string scaleChoice = Console.ReadLine();
             double nummb = 1;
             bool validInput = false;
+            recipe currentRecipe = null;
             while (!validInput)
             {
                 switch (scaleChoice.ToLower())
@@ -173,6 +198,14 @@ namespace Prog1.st10254714
                         break;
                     case "triple":
                         nummb = 3;
+                        validInput = true;
+                        break;
+                    case "revert":
+                        if (currentRecipe != null)
+                        {
+                            currentRecipe.revertScaling();
+                            Console.WriteLine("recipe scaling has been reverted");
+                        }
                         validInput = true;
                         break;
                     default:
@@ -196,19 +229,17 @@ namespace Prog1.st10254714
             Console.ReadLine();
         }
 
-      
-        public void updateScaledRecipe(double scaledQuantity)
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+        public void revertScaling()
         {
-            for (int i= 0; i <ingredient.Count; i++)
-            {
-                string[] parts = ingredient[i].Split(',');
-                double originalAmount = double.Parse(parts[1].Trim());
-                double newQuantity = originalAmount * (scaledQuantity / double.Parse(parts[1].Trim()));
-                ingredient[i] = $"{parts[0]},{newQuantity.ToString()}, {parts[2]}";
-            }
-            
-        }
+            ingredient.Clear();
 
+            foreach (var originalIng in originalIgredients)
+            {
+                ingredient.Add(originalIng);
+            }
+        }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public static void displayListOfRecipes()
         {
             Console.WriteLine("All recipes:");
