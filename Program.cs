@@ -12,7 +12,7 @@ namespace Prog1.st10254714
         static void Main(string[] args)
         {
             
-            recipe.intro();
+            recipe.intro();// intialize the intro method stored in the recipe class which holds all of the code
            
         }
     }
