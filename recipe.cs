@@ -31,13 +31,11 @@ namespace Prog1.st10254714
                 int userInput;
                 bool selectNumber;
                 selectNumber = int.TryParse(Console.ReadLine(), out userInput);
-                //string userInput = Console.ReadLine();
+                
                 switch (userInput)
                 {
                     case 1:
-                        /*recipe newRecipe = new recipe();
-                        recipeDetails(newRecipe);
-                        recipes.Add(newRecipe);*/
+                        
                         currentRecipe = new recipe();
                         recipeDetails(currentRecipe);
                         recipes.Add(currentRecipe);
@@ -183,13 +181,7 @@ namespace Prog1.st10254714
                 }
             }
 
-            /*foreach (var ingredient in recipeToScale.ingredient)
-            {
-                string[] parts = ingredient.Split(',');
-                double originalAmount = double.Parse(parts[1].Trim());
-                double newQuantity = originalAmount * nummb;
-                recipeToScale.ingredient[recipeToScale.ingredient.IndexOf(ingredient)] = $"{parts[0]},{newQuantity.ToString()}, {parts[2]}";
-            }*/
+            
             for (int i = 0; i < recipeToScale.ingredient.Count; i++)
             {
                 string[] parts = recipeToScale.ingredient[i].Split(',');
