@@ -16,6 +16,7 @@ namespace Prog1.st10254714
         {
             bool continueProgram = true;
             string quantity = null;
+            recipe currentRecipe = null;
 
             while (continueProgram)
             {
@@ -34,20 +35,29 @@ namespace Prog1.st10254714
                 switch (userInput)
                 {
                     case 1:
-                        recipe newRecipe = new recipe();
+                        /*recipe newRecipe = new recipe();
                         recipeDetails(newRecipe);
-                        recipes.Add(newRecipe);
+                        recipes.Add(newRecipe);*/
+                        currentRecipe = new recipe();
+                        recipeDetails(currentRecipe);
+                        recipes.Add(currentRecipe);
                         break;
 
                     case 2:
                         Console.WriteLine("displaying recipes");
                         displayListOfRecipes();
-                  
                         
                         break;
                     case 3:
+                        if (currentRecipe != null)
+                        {
+                            recipeScale(currentRecipe);
+                        }
+                        else
+                        {
+                            Console.WriteLine("No recipe has been created yet.");
+                        }
 
-                        recipeScale(quantity);
 
                         break;
                     case 4:
@@ -95,7 +105,7 @@ namespace Prog1.st10254714
                         Console.WriteLine("enter the unit of measurement of the ingredient:");
                         unitOfMes = Console.ReadLine();
                
-                //recipeScale(quantity);
+                
 
 
 
@@ -113,32 +123,6 @@ namespace Prog1.st10254714
 
 
                     }
-/*
-            double nummb;
-            if (double.TryParse(quantity, out nummb))
-            {
-                Console.WriteLine("what would you like to scale the recipe to? half, double or triple?");
-                string scaleChoice = Console.ReadLine();
-
-                switch (scaleChoice.ToLower())
-                {
-                    case "half":
-                        nummb *= 0.5;
-                        break;
-
-                    case "double":
-                        nummb *= 2;
-                        break;
-
-                    case "triple":
-                        nummb *= 3;
-                        break;
-
-
-
-                }
-                Console.WriteLine($"Scaled quantity: {nummb}");
-            }*/
             //**********************************************************************************************************************************
 
             Console.WriteLine("add a step? Y or N");
@@ -170,32 +154,66 @@ namespace Prog1.st10254714
 
 
         }
-        public static void recipeScale(string quantity)
+        public static void recipeScale(recipe recipeToScale)
         {
-            double nummb;
-            double.TryParse(quantity, out nummb);
-            
-                Console.WriteLine("what would you like to scale the recipe to? half, double or triple?");
-                string scaleChoice = Console.ReadLine();
 
+            Console.WriteLine("What would you like to scale the recipe to? (half, double, triple)");
+            string scaleChoice = Console.ReadLine();
+            double nummb = 1;
+            bool validInput = false;
+            while (!validInput)
+            {
                 switch (scaleChoice.ToLower())
                 {
                     case "half":
-                        nummb *= 0.5;
+                        nummb = 0.5;
+                        validInput = true;
                         break;
-
                     case "double":
-                        nummb *= 2;
+                        nummb = 2;
+                        validInput = true;
                         break;
-
                     case "triple":
-                        nummb *= 3;
+                        nummb = 3;
+                        validInput = true;
                         break;
-
-
-
+                    default:
+                        Console.WriteLine("Invalid scaling choice.");
+                        return;
                 }
-                Console.WriteLine($"Scaled quantity: {nummb}");
+            }
+
+            /*foreach (var ingredient in recipeToScale.ingredient)
+            {
+                string[] parts = ingredient.Split(',');
+                double originalAmount = double.Parse(parts[1].Trim());
+                double newQuantity = originalAmount * nummb;
+                recipeToScale.ingredient[recipeToScale.ingredient.IndexOf(ingredient)] = $"{parts[0]},{newQuantity.ToString()}, {parts[2]}";
+            }*/
+            for (int i = 0; i < recipeToScale.ingredient.Count; i++)
+            {
+                string[] parts = recipeToScale.ingredient[i].Split(',');
+                double originalAmount = double.Parse(parts[1].Trim());
+                double newQuantity = originalAmount * nummb;
+                recipeToScale.ingredient[i] = $"{parts[0]},{newQuantity.ToString()}, {parts[2]}";
+            }
+
+            Console.WriteLine("************************************************");
+            Console.WriteLine($"Scaled recipe successfully.");
+            Console.WriteLine("Press enter to continue");
+            Console.ReadLine();
+        }
+
+      
+        public void updateScaledRecipe(double scaledQuantity)
+        {
+            for (int i= 0; i <ingredient.Count; i++)
+            {
+                string[] parts = ingredient[i].Split(',');
+                double originalAmount = double.Parse(parts[1].Trim());
+                double newQuantity = originalAmount * (scaledQuantity / double.Parse(parts[1].Trim()));
+                ingredient[i] = $"{parts[0]},{newQuantity.ToString()}, {parts[2]}";
+            }
             
         }
 
