@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Prog1.st10254714
 {
     class stuff : recipe
-    {
+    {/*
         public static void recipeScale(string quantity)
         {
             double nummb;
@@ -36,6 +36,6 @@ namespace Prog1.st10254714
                 Console.WriteLine($"Scaled quantity: {nummb}");
             }
         }
-
+        */
     }
 }

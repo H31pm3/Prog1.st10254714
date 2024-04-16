@@ -173,8 +173,8 @@ namespace Prog1.st10254714
         public static void recipeScale(string quantity)
         {
             double nummb;
-            if (double.TryParse(quantity, out nummb))
-            {
+            double.TryParse(quantity, out nummb);
+            
                 Console.WriteLine("what would you like to scale the recipe to? half, double or triple?");
                 string scaleChoice = Console.ReadLine();
 
@@ -196,7 +196,7 @@ namespace Prog1.st10254714
 
                 }
                 Console.WriteLine($"Scaled quantity: {nummb}");
-            }
+            
         }
 
         public static void displayListOfRecipes()
