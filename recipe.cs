@@ -52,9 +52,10 @@ namespace Prog1.st10254714
 
                 Console.WriteLine("enter in 1 to create a new recipe");
                 Console.WriteLine("enter in 2 to display all recipes");
-                Console.WriteLine("enter in 3 to scale recipe");
-                Console.WriteLine("enter in 4 to clear recipes");
-                Console.WriteLine("enter in 5 to exit program");
+                Console.WriteLine("enter in 3 to display specific recipe");
+                Console.WriteLine("enter in 4 to scale recipe");
+                Console.WriteLine("enter in 5 to clear recipes");
+                Console.WriteLine("enter in 6 to exit program");
                 int userInput;
                 bool selectNumber;
                 selectNumber = int.TryParse(Console.ReadLine(), out userInput);
@@ -73,7 +74,13 @@ namespace Prog1.st10254714
                         displayListOfRecipes();
 
                         break;
-                    case 3: //opens the scaling sub menu
+                    case 3: //displays a specific recipe that the user specifies
+                        displaySpecificRecipe();
+
+
+
+                        break;
+                    case 4: //opens the scaling sub menu
                         if (currentRecipe != null)
                         {
                             recipeScale(currentRecipe);
@@ -84,7 +91,7 @@ namespace Prog1.st10254714
                         }
 
                         break;
-                    case 4: //clears all created recipes from program
+                    case 5: //clears all created recipes from program
                         if (currentRecipe != null)
                         {
                             currentRecipe.clearRecipes();
@@ -95,7 +102,7 @@ namespace Prog1.st10254714
                             Console.WriteLine("No recipe exists to be cleared");
                         }
                         break;
-                    case 5: //closes program
+                    case 6: //closes program
                         Console.WriteLine("Exiting program");
                         Environment.Exit(0);
 
@@ -305,6 +312,38 @@ namespace Prog1.st10254714
                 Console.WriteLine("*******************************************************************");
                 Console.WriteLine("");
                 Console.WriteLine("");
+            }
+        }
+        private static void displaySpecificRecipe()
+        {
+            Console.WriteLine("Please search for a recipe by name");
+            string recipeName = Console.ReadLine();
+            var recipe = recipes.FirstOrDefault(r => r.recipeName == recipeName);
+            if (recipe!= null)
+            {
+                Console.WriteLine("Showing Recipe:"+recipe.recipeName);
+                displayDetailsForRecipe(recipe);
+            }
+            else
+            {
+                Console.WriteLine("No recipe found with this name. Please check your spelling and try again");
+            }
+
+        }
+        private static void displayDetailsForRecipe(recipe recipe)
+        {
+            Console.WriteLine("Recipe Details:");
+            Console.WriteLine("****************************************");
+            Console.WriteLine("Name:" + recipe.recipeName);
+            Console.WriteLine("Ingredients:");
+            foreach (var ingredient in recipe.ingredient)
+            {
+                Console.WriteLine(ingredient);
+            }
+            Console.WriteLine("Steps:");
+            foreach (var step in recipe.steps)
+            {
+                Console.WriteLine(step);
             }
         }
     }
