@@ -13,16 +13,18 @@ using System.Threading.Tasks;
                                                                 References:
 Anthropic, 2024. Claude. [Online]
 Available at: https://claude.ai
-[accessed 15 april 2024].
+[accessed 28 May 2024].
 
 Phind, 2024. Phind. [Online]
 Available at: https://phind.com/
-[accessed 15 april 2024].
+[accessed 28 May 2024].
 
 Refsnes Data, 1999. W3schools. [Online]
 Available at: https://www.w3schools.com/
-[accessed 15 april 2024].
+[accessed 28 May 2024].
 
+ https://sweetlife.org.za/what-are-the-different-food-groups-a-simple-explanation/ 
+[accessed on 28 May 2024]
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 namespace Prog1.st10254714
@@ -34,7 +36,7 @@ namespace Prog1.st10254714
         public List<string> originalIngredients { get; set; } = new List<string>();
         public List<string> steps { get; set; } = new List<string>();
 
-       static List<string> validFoodGroups = new List<string> { "starch", "vegetables","fruits", "Beans", "Meat", "Dairy", "Fats", "Water" };
+       static List<string> validFoodGroups = new List<string> { "starch", "vegetables","fruits", "beans", "meat", "dairy", "fats", "water" };
         public string recipeName { get; set; }
         public double calouriesPerIngredient { get; set; }
         //initiliazing lists
@@ -117,6 +119,7 @@ namespace Prog1.st10254714
             }
 
         }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public void clearRecipes() //simple function to clear stored recipes
         {
             //List<recipe> tempRecipe = recipes.ToList();
@@ -128,7 +131,7 @@ namespace Prog1.st10254714
             }
             recipes.Clear();
         }
-
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public enum foodGroup
         {
             Starch,
@@ -146,7 +149,8 @@ namespace Prog1.st10254714
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public void newIngredients(string name, string quantity, string unitOfMeasure, double calories, string group) //intialise ingredients list
         {
-            if (!validFoodGroups.Contains(group.ToLower()))
+            string lowerCaseGrp = group.ToLower();
+            if (!validFoodGroups.Contains(lowerCaseGrp))
             {
                 Console.WriteLine("Invalid food group entered. Please enter a valid food group.");
                 return; // Exit the method if the group is invalid
@@ -154,6 +158,7 @@ namespace Prog1.st10254714
 
             ingredient.Add($"{quantity},{unitOfMeasure}, of {name}, contains {calories} cal and belongs to the group {group}");
             //ingredient.Add($"{quantity} ,{unitOfMeasure}, of {name}, contains {calories} cal and belongs tothe group {group}");
+            originalIngredients.Add($"{name}|{calories}|{lowerCaseGrp}");
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public void addStep(string nam, string description) //initiliaze steps list
@@ -327,7 +332,25 @@ namespace Prog1.st10254714
             
         }
 
-        
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+        public double GettotalCalories() //method for calculating the total calories of recipe
+        {
+            double totalCalories = 0;
+            foreach (var originalIngredient in originalIngredients)
+            {
+                string[] parts = originalIngredient.Split('|');
+                if (parts.Length == 3)
+                {
+                    double calories = double.Parse(parts[1]);
+                    totalCalories += calories;
+                }
+                else
+                {
+                    
+                }
+            }
+            return totalCalories;
+        }
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         
         public static void displayListOfRecipes() //method to display the details of recipes entered by the user 
@@ -339,22 +362,42 @@ namespace Prog1.st10254714
             {
                 Console.WriteLine("Recipe details:");
                 Console.WriteLine("Name:"+ recipe.recipeName);
+
                 Console.WriteLine("ingredients:");
                 foreach (var ingredient in recipe.ingredient)
                 {
                     Console.WriteLine(ingredient);
+                    var originalIngredient = recipe.originalIngredients.FirstOrDefault(i => i.StartsWith(ingredient.Split(',')[2].Trim()));
+                    if (!string.IsNullOrEmpty(originalIngredient))
+                    {
+                        string[] parts = originalIngredient.Split('|');
+                        string name = parts[0];
+                        double calories = double.Parse(parts[1]);
+                        string group = parts[2];
+                        Console.WriteLine($"Calories: {calories}, Food Group: {group}");
+                    }
                 }
+
                 Console.WriteLine("Steps:");
                 foreach (var step in recipe.steps)
                 {
                     Console.WriteLine(step);
                 }
+                double totalCalories = recipe.GettotalCalories();
+                Console.WriteLine($"Total Amount of Calories: {totalCalories}");
+
+                if (totalCalories > 300)
+                {
+                    Console.WriteLine("Warning: Total calories exceeds 300!");
+                }
+
                 Console.WriteLine("*******************************************************************");
                 Console.WriteLine("");
                 Console.WriteLine("");
             }
         }
-        private static void displaySpecificRecipe()
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
+        private static void displaySpecificRecipe() // displays a recipe as specified by the user using the recipes name
         {
             Console.WriteLine("Please search for a recipe by name");
             string recipeName = Console.ReadLine();
@@ -370,6 +413,7 @@ namespace Prog1.st10254714
             }
 
         }
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         private static void displayDetailsForRecipe(recipe recipe)
         {
             Console.WriteLine("Recipe Details:");
@@ -379,11 +423,27 @@ namespace Prog1.st10254714
             foreach (var ingredient in recipe.ingredient)
             {
                 Console.WriteLine(ingredient);
+                var originalIngredient = recipe.originalIngredients.FirstOrDefault(i => i.StartsWith(ingredient.Split(',')[2].Trim()));
+                if (!string.IsNullOrEmpty(originalIngredient))
+                {
+                    string[] parts = originalIngredient.Split('|');
+                    string name = parts[0];
+                    double calories = double.Parse(parts[1]);
+                    string group = parts[2];
+                    Console.WriteLine($"Calories: {calories}, Food Group: {group}");
+                }
             }
             Console.WriteLine("Steps:");
             foreach (var step in recipe.steps)
             {
                 Console.WriteLine(step);
+            }
+            double totalCalories = recipe.GettotalCalories();
+            Console.WriteLine($"Total Amount of Calories: {totalCalories}");
+
+            if (totalCalories > 300)
+            {
+                Console.WriteLine("Warning: Total calories exceeds 300!");
             }
         }
     }
