@@ -115,9 +115,14 @@ namespace Prog1.st10254714
         }
         public void clearRecipes() //simple function to clear stored recipes
         {
-            ingredient.Clear();
-            steps.Clear();
-
+            //List<recipe> tempRecipe = recipes.ToList();
+            foreach (var recipe in recipes)
+            {
+                recipe.ingredient.Clear();
+                recipe.steps.Clear();
+                
+            }
+            recipes.Clear();
         }
 
 
