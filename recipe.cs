@@ -31,6 +31,8 @@ namespace Prog1.st10254714
         public List<string> ingredient { get; set; } = new List<string>();
         public List<string> originalIngredients { get; set; } = new List<string>();
         public List<string> steps { get; set; } = new List<string>();
+
+        public string recipeName { get; set; }
         //initiliazing lists
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -49,7 +51,7 @@ namespace Prog1.st10254714
                 Console.WriteLine("");
 
                 Console.WriteLine("enter in 1 to create a new recipe");
-                Console.WriteLine("enter in 2 to display created recipes");
+                Console.WriteLine("enter in 2 to display all recipes");
                 Console.WriteLine("enter in 3 to scale recipe");
                 Console.WriteLine("enter in 4 to clear recipes");
                 Console.WriteLine("enter in 5 to exit program");
@@ -128,12 +130,16 @@ namespace Prog1.st10254714
         {
             Console.WriteLine("create new recipe");
             string name;
+            string recipeName;
             string quantity;
             string unitOfMes;
             string numOfIngred;
             string numOfSteps;
             Console.WriteLine("Please enter in your details for your recipe");
             Console.WriteLine("**************************************************");
+            Console.WriteLine("Please enter in the name of the recipe");
+            recipeName = Console.ReadLine();
+            newRecipe.recipeName = recipeName;
             Console.WriteLine("how many ingredients in the recipe?:");
             numOfIngred = Console.ReadLine();
             Console.WriteLine("add an ingredient? Y or N");
@@ -279,11 +285,13 @@ namespace Prog1.st10254714
         
         public static void displayListOfRecipes() //method to display the details of recipes entered by the user 
         {
+            recipes.Sort((x,y) => string.Compare(x.recipeName, y.recipeName));
             Console.WriteLine("All recipes:");
             Console.WriteLine("*******************************************************************");
             foreach (var recipe in recipes) // foreach that dsplays each recipe inside the recipes list
             {
                 Console.WriteLine("Recipe details:");
+                Console.WriteLine("Name:"+ recipe.recipeName);
                 Console.WriteLine("ingredients:");
                 foreach (var ingredient in recipe.ingredient)
                 {
