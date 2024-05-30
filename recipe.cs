@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.Remoting.Services;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +34,9 @@ namespace Prog1.st10254714
         public List<string> originalIngredients { get; set; } = new List<string>();
         public List<string> steps { get; set; } = new List<string>();
 
+       static List<string> validFoodGroups = new List<string> { "starch", "vegetables","fruits", "Beans", "Meat", "Dairy", "Fats", "Water" };
         public string recipeName { get; set; }
+        public double calouriesPerIngredient { get; set; }
         //initiliazing lists
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -125,11 +129,31 @@ namespace Prog1.st10254714
             recipes.Clear();
         }
 
+        public enum foodGroup
+        {
+            Starch,
+            Vegetables,
+            Fruits,
+            Beans,
+            Meat,
+            Dairy,
+            Fats,
+            Water
+
+
+        }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
-        public void newIngredients(string name, string quantity, string unitOfMeasure) //intialise ingredients list
+        public void newIngredients(string name, string quantity, string unitOfMeasure, double calories, string group) //intialise ingredients list
         {
-            ingredient.Add($"{quantity} ,{unitOfMeasure}, of {name}");
+            if (!validFoodGroups.Contains(group.ToLower()))
+            {
+                Console.WriteLine("Invalid food group entered. Please enter a valid food group.");
+                return; // Exit the method if the group is invalid
+            }
+
+            ingredient.Add($"{quantity},{unitOfMeasure}, of {name}, contains {calories} cal and belongs to the group {group}");
+            //ingredient.Add($"{quantity} ,{unitOfMeasure}, of {name}, contains {calories} cal and belongs tothe group {group}");
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
         public void addStep(string nam, string description) //initiliaze steps list
@@ -147,6 +171,7 @@ namespace Prog1.st10254714
             string unitOfMes;
             string numOfIngred;
             string numOfSteps;
+           
             Console.WriteLine("Please enter in your details for your recipe");
             Console.WriteLine("**************************************************");
             Console.WriteLine("Please enter in the name of the recipe");
@@ -167,12 +192,22 @@ namespace Prog1.st10254714
                 quantity = Console.ReadLine();
                 Console.WriteLine("enter the unit of measurement of the ingredient:");
                 unitOfMes = Console.ReadLine();
-                newRecipe.originalIngredients.Add($"{quantity}, {unitOfMes},of {name}");
+                Console.WriteLine("enter the amount of calories of the ingredient:");
+                double cal = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("enter the food group(Starch,Vegetables,Fruits,Beans,Meat,Dairy,Fats,Water):");
+                string group = Console.ReadLine().ToLower();
+               
 
 
 
 
-                newRecipe.newIngredients(name, quantity, unitOfMes);
+                newRecipe.originalIngredients.Add($"{quantity} ,{unitOfMes}, of {name}, contains {cal} cal and belongs to the group {group}");
+
+
+
+               
+                newRecipe.newIngredients(name, quantity, unitOfMes, cal,group);
+
                 Console.WriteLine("Do you want to enter in another ingredient? enter Y or N ");
                 string slct = Console.ReadLine();
                 if (slct.ToLower() == "y")
